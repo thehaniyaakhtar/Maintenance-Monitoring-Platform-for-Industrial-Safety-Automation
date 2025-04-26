@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Alerts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color:  #927355;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 80%;
+            max-width: 1000px;
+            background:#e5cd9e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h1 {
+            color: #4a6a6d;
+            margin-bottom: 20px;
+        }
+        .alert-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1.2rem;
+        }
+        .alert-table th, .alert-table td {
+            border: 1px solid black;
+            padding: 15px;
+            text-align: center;
+        }
+        .alert-table th {
+            background-color: #cb541e;
+            color: white;
+        }
+        .low { background-color: lightgreen; }
+        .medium { background-color: yellow; }
+        .high { background-color: orange; }
+        .critical { background-color: red; color: white; }
+        button {
+            padding: 10px 15px;
+            font-size: 1rem;
+            background-color: #cb541e;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #ff6b3d;
+        }
+        input[type="datetime-local"] {
+            padding: 8px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>⚠️ Safety Alerts</h1>
+    <table class="alert-table" id="alerts-table">
+        <tr>
+            <th>Timestamp</th>
+            <th>Machine</th>
+            <th>Alert Type</th>
+            <th>Severity</th>
+            <th>Notify</th>
+            <th>Set Reminder</th>
+        </tr>
+    </table>
+    
+</div>
+<script>
+    window.addEventListener("DOMContentLoaded", () => {
+        const alerts = JSON.parse(localStorage.getItem("alerts") || "[]");
+        const table = document.getElementById("alerts-table");
+    
+        alerts.forEach((alert, index) => {
+            const row = document.createElement("tr");
+    
+            row.innerHTML = `
+                <td>${new Date(alert.timestamp).toLocaleString()}</td>
+                <td>${alert.machine}</td>
+                <td>${alert.alertType}</td>
+                <td class="${alert.severity.toLowerCase()}">${alert.severity}</td>
+                <td><button onclick="notify('${alert.machine}', '${alert.alertType}', '${alert.severity}')">Notify</button></td>
+                <td>
+                    <input type="datetime-local" id="reminder${index}">
+                    <button onclick="setReminder('reminder${index}', '${alert.machine}')">Set</button>
+                </td>
+            `;
+    
+            table.appendChild(row);
+        });
+    });
+    
+    // Ask for notification permission
+    if (Notification.permission !== "granted") {
+        Notification.requestPermission();
+    }
+    
+    function notify(machine, type, severity) {
+        const message = `${machine} has a ${severity} alert for ${type}.`;
+    
+        if (Notification.permission === "granted") {
+            new Notification("🚨 Machine Alert", {
+                body: message,
+                icon: "https://cdn-icons-png.flaticon.com/512/833/833472.png"
+            });
+        } else {
+            alert(message);
+        }
+    }
+        function sendAlertEmail(machine, issue, severity) {
+            fetch('send_email.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ machine, issue, severity })
+            })
+            .then(response => response.text())
+            .then(data => alert(data))
+            .catch(error => console.error('Error:', error));
+        }
+        
+        function setReminder(inputId, machine) {
+            const reminderTimeStr = document.getElementById(inputId).value;
+            if (!reminderTimeStr) {
+                alert("Please select a time for the reminder.");
+                return;
+            }
+        
+            const reminderTime = new Date(reminderTimeStr);
+            const now = new Date();
+            const delay = reminderTime - now;
+        
+            if (delay <= 0) {
+                alert("Selected time is in the past. Please choose a future time.");
+                return;
+            }
+        
+            alert(`Reminder set for ${machine} at ${reminderTime.toLocaleString()}`);
+        
+            setTimeout(() => {
+                alert(`🔔 Reminder: Attention needed for ${machine}!`);
+            }, delay);
+        }
+    </script>
+    
+        
+    
+
+</body>
+</html>

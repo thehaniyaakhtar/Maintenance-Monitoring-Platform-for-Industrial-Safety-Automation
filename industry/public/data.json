@@ -1,0 +1,42 @@
+[
+    {
+        "date": "2025-04-24 12:45:22",
+        "air_temp": 295,
+        "process_temp": 305,
+        "rotational_speed": 1200,
+        "torque": 40,
+        "tool_wear": 15
+    },
+    {
+        "date": "2025-04-24 12:50:31",
+        "air_temp": 300,
+        "process_temp": 315,
+        "rotational_speed": 1500,
+        "torque": 55,
+        "tool_wear": 20
+    },
+    {
+        "date": "2025-04-24 23:20:58",
+        "air_temp": 45,
+        "process_temp": 89,
+        "rotational_speed": 65,
+        "torque": 90,
+        "tool_wear": 78
+    },
+    {
+        "date": "2025-04-24 23:39:13",
+        "air_temp": 8,
+        "process_temp": 978,
+        "rotational_speed": 9,
+        "torque": 98,
+        "tool_wear": 89
+    },
+    {
+        "date": "2025-04-24 23:43:37",
+        "air_temp": 79,
+        "process_temp": 6798,
+        "rotational_speed": 907,
+        "torque": 98,
+        "tool_wear": 98
+    }
+]

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Layout</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 30px; /* Increased from the default 16px */
+        }
+        
+        body {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #e5cd9e;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        .image-section {
+            width: 33%;
+            height: 100%;
+            background: url('home.jpg') no-repeat center center/cover;
+        }
+
+        .content-section {
+            width: 67%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .title-section {
+            font-size: 2.5rem;
+            color: #4a6a6d;
+            font-family: "Times New Roman", serif;
+            font-weight: bold;
+            height: 15%;
+            display: flex;
+            flex-direction: column;
+            justify-content: right;
+            align-items: right;
+            text-align: left;
+            background-color: #e5cd9e;
+            padding: 2px 7px; /* Adjusted padding to move it down */
+        }
+        .description {
+            font-size: 1.2rem;
+            font-weight: normal;
+            color: #000; /* Set text color to black */
+            font-family: "Times New Roman", serif;
+            text-align: left;
+            
+            margin-top: 30px;
+            padding: 0 20px; /* Adds spacing on both sides */
+            max-width: 80%; /* Keeps text from stretching too wide */
+        
+        }
+        
+        /* Widget Container */
+        .widget-container {
+            width: 100%;
+            height: 55%;
+            overflow: hidden;
+            position: relative;
+            background-color: #e5cd9e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .widget-slider {
+            display: flex;
+            width: 300%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .widget {
+            width: 60%;
+            height: 110%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: "Times New Roman", serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4a6a6d;
+            background-color: #cb541e;
+            text-align: center;
+            padding: 50px;
+            transition: 0.3s ease-in-out;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s ease-in-out;
+            flex-shrink: 0; /* Prevents widgets from shrinking */
+        }
+
+        .widget {
+            width: calc(100% - 20px); /* Adjust width to account for gap */
+            margin: 0 10px; /* Space between widgets */
+            background-color: #cb541e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            flex-shrink: 0; /* Prevents widgets from shrinking */
+            border-radius: 10px; /* Optional: Adds rounded corners */
+        }
+
+        .widget-slider {
+            display: flex;
+            width: 320%; /* Adjusted for spacing */
+            transition: transform 0.5s ease-in-out;
+            gap: 20px; /* Adds space between widgets */
+            padding: 0 10px; /* Ensures space on both ends */
+
+        }
+    
+        .widget:hover {
+            background-color: #ff6b3d;
+            transform: scale(1);
+            box-shadow: 0px 0px 10px #ff6b3d;
+        }
+        /* Navigation Dots */
+        
+
+        /* Auth Section */
+      
+        .auth-section {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 67%;  /* Adjusted width */
+            height: 20%; /* Full height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #927355;
+        }
+
+        /* Buttons */
+        button {
+            margin: 10px;
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+            background-color: #cb541e;
+            color: white;
+            border-radius: 8px;
+            transition: 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            background-color: #ff6b3d;
+            transform: scale(1.05);
+            box-shadow: 0px 0px 10px #ff6b3d;
+        }
+        
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-section"></div>
+        <div class="content-section">
+            <div class="title-section">
+                𝐈𝐧𝐝𝐮𝐬𝐭𝐫𝐢𝐚𝐥 𝐒𝐚𝐟𝐞𝐭𝐲 𝐌𝐚𝐜𝐡𝐢𝐧𝐞 𝐌𝐚𝐢𝐧𝐭𝐞𝐧𝐚𝐧𝐜𝐞 𝐚𝐧𝐝 𝐌𝐨𝐧𝐢𝐭𝐨𝐫𝐢𝐧𝐠 𝐒𝐲𝐬𝐭𝐞𝐦
+            </div>
+            <div class="description">
+                Welcome back! Your Industrial Safety Machine Monitoring dashboard is here to keep you updated.  
+                Track real-time machine performance, receive preventive maintenance alerts, and access historical data  
+                to ensure smooth operations. Stay ahead of potential issues and maximize efficiency with smart insights tailored for you.
+            </div>
+
+            <div class="auth-section">
+                <button>Log Out</button>
+            </div>
+        
+
+            <!-- Widget Section -->
+            <div class="widget-container">
+                <div class="widget-slider">
+                    <div class="widget">
+                        <h3>📊 Real-time Monitoring</h3>
+                        <p>Track your machines 24/7 with live data.</p>
+                        <a href="http://localhost:8501">Learn More</a>
+                    </div>
+                    <div class="widget">
+                        <h3>🔧 Preventive Maintenance</h3>
+                        <p>Schedule maintenance before failures happen.</p>
+                        <a href="maintainence.html">Explore</a>
+                    </div>
+                    <div class="widget">
+                        <h3>⚠️ Safety Alerts</h3>
+                        <p>Get notified instantly about potential hazards.</p>
+                        <a href="alert.html">See How</a>
+                    </div>
+                    <div class="widget">
+                        <h3> History </h3>
+                        <p>Check the History of your machine to check remaning life</p>
+                        <a href="analysis.html">See How</a>
+                    </div>
+                    <button onclick="logoutUser()">Logout</button>
+
+                </div>
+            </div>
+
+           
+    </div>
+
+    >
+        
+
+    <script>
+
+
+        let index = 0;
+        const slides = document.querySelector(".widget-slider");
+        const dots = document.querySelectorAll(".dot");
+
+        
+        function moveSlider(n) {
+            index = n;
+            slides.style.transform = `translateX(-${n * 100}%)`;
+            updateDots();
+        }
+
+        function updateDots() {
+            dots.forEach(dot => dot.classList.remove("active"));
+            dots[index].classList.add("active");
+        }
+
+        function autoSlide() {
+            index = (index + 1) % 4;  
+            moveSlider(index);
+        }
+        
+        setInterval(autoSlide, 3000);
+    </script>
+    
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Preventive Maintenance</title>
+  <style>
+    html {
+      font-size: 30px; /* or 20px for slightly larger text */
+    }
+  
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #927355;
+      margin: 0;
+      padding: 20px;
+    }
+  
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      background: #e5cd9e;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      font-size: 35px;
+    }
+  
+    h1 {
+      text-align: center;
+      color: #4a6a6d;
+    }
+  
+    h3 {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: #4a6a6d;
+      text-align: center;
+    }
+  
+    .section {
+      margin-bottom: 25px;
+    }
+  
+    label {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-top: 20px;
+      display: block;
+    }
+  
+    select,
+    input[type="date"],
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px; /* space between label and input */
+      margin-bottom: 25px; /* space below input */
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+  
+    button {
+      background-color: #cb541e;
+      color: white;
+      cursor: pointer;
+      border: none;
+      padding: 14px 50px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+  
+    button:hover {
+      background-color: #ff6b3d;
+    }
+  
+    /* Make the date input calendar picker more user-friendly */
+    input[type="date"] {
+      font-size: 1.1rem;
+    }
+  
+    textarea {
+      resize: vertical;
+      font-size: 1rem;
+      height: 120px;
+    }
+  </style>
+  
+</head>
+<body>
+    <div class="container">
+        <h1>Preventive Maintenance</h1>
+      
+        <div class="container">
+          <h3>Schedule a Maintenance Task</h3>
+      
+          <div class="section">
+            <form id="schedule-form">
+              <!-- Machine Selection -->
+              <label for="machine">Select Machine:</label>
+              <select id="machine" required>
+                <option value="" disabled selected>Select a machine</option>
+                <option value="Machine A">Machine L</option>
+                <option value="Machine B">Machine M</option>
+                <option value="Machine C">Machine H</option>
+              </select>
+      
+              <!-- Maintenance Date -->
+              <label for="date">Maintenance Date:</label>
+              <input type="date" id="date" required>
+      
+              <!-- Severity Level -->
+              <label for="severity">Severity Level:</label>
+              <select id="severity" required>
+                <option value="" disabled selected>Choose severity</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+                <option value="Critical">Critical</option>
+              </select>
+      
+              <!-- Issue Description -->
+              <label for="issue">Describe the Issue:</label>
+              <textarea id="issue" rows="4" placeholder="Briefly describe the issue..." required></textarea>
+      
+              <!-- Submit Button -->
+              <button type="submit">Submit Maintenance Request</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+
+  <script>
+    document.getElementById("schedule-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+    
+      const machine = document.getElementById("machine").value;
+      const date = document.getElementById("date").value;
+      const severity = document.getElementById("severity").value;
+      const issue = document.getElementById("issue").value;
+    
+      const reminderTime = new Date(date + "T09:00:00"); // Default to 9 AM on selected date
+      const now = new Date();
+    
+      const newAlert = {
+        timestamp: now.toISOString(),
+        machine: machine,
+        alertType: issue,
+        severity: severity,
+        reminderTime: reminderTime.toISOString()
+      };
+    
+      let alerts = JSON.parse(localStorage.getItem("alerts") || "[]");
+      alerts.push(newAlert);
+      localStorage.setItem("alerts", JSON.stringify(alerts));
+    
+      // Show immediate alert
+      alert("Request submitted! Check the Alert page for details.");
+    
+      // Reminder logic
+      const timeDifference = reminderTime.getTime() - now.getTime();
+    
+      if (timeDifference > 0) {
+        setTimeout(() => {
+          alert(`🔔 Reminder: Check maintenance issue for ${machine}: ${issue}`);
+        }, timeDifference);
+      }
+    
+      // Reset the form
+      document.getElementById("schedule-form").reset();
+    });
+    </script>
+    
+</body>
+</html>

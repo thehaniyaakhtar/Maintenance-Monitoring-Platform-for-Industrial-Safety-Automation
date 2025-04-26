@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Failure Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #927355;
+            padding: 20px;
+        }
+        table {
+            width: 90%;
+            margin: auto;
+            border-collapse: collapse;
+            background: #e5cd9e;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background: #333;
+            color: white;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        select {
+            padding: 8px;
+            font-size: 16px;
+            margin: 20px;
+        }
+        canvas {
+            width: 100%;
+            max-width: 700px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Machine Failure Analysis</h1>
+
+    <div class="container">
+        <h2>Machine Parameter Table</h2>
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>Serial No</th>
+                    <th>Date</th>
+                    <th>Air Temp (K)</th>
+                    <th>Process Temp (K)</th>
+                    <th>Rotational Speed (rpm)</th>
+                    <th>Torque (Nm)</th>
+                    <th>Tool Wear (min)</th>
+                </tr>
+            </thead>
+            <tbody id="dataRows">
+                <!-- Data will be inserted here dynamically -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container">
+        <h2>Select Parameter to View Graph</h2>
+        <select id="parameterSelect">
+            <option value="airTemp">Air Temperature (K)</option>
+            <option value="processTemp">Process Temperature (K)</option>
+            <option value="rotationalSpeed">Rotational Speed (rpm)</option>
+            <option value="torque">Torque (Nm)</option>
+            <option value="toolWear">Tool Wear (min)</option>
+        </select>
+
+        <canvas id="parameterChart"></canvas>
+    </div>
+
+    <script>
+        // Fetch data from JSON file
+        fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+            const dataTable = document.getElementById("dataRows");
+            data.forEach((entry, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${entry.date}</td>
+                    <td>${entry.air_temp}</td>
+                    <td>${entry.process_temp}</td>
+                    <td>${entry.rotational_speed}</td>
+                    <td>${entry.torque}</td>
+                    <td>${entry.tool_wear}</td>
+                `;
+                dataTable.appendChild(row);
+            });
+
+            const chartData = {
+                labels: data.map((_, index) => index + 1),
+                airTemp: data.map(entry => entry.air_temp),
+                processTemp: data.map(entry => entry.process_temp),
+                rotationalSpeed: data.map(entry => entry.rotational_speed),
+                torque: data.map(entry => entry.torque),
+                toolWear: data.map(entry => entry.tool_wear)
+            };
+
+            const ctx = document.getElementById("parameterChart").getContext("2d");
+            const chart = new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: chartData.labels,
+                    datasets: [{
+                        label: "Air Temperature (K)",
+                        data: chartData.airTemp,
+                        backgroundColor: "rgba(255, 99, 132, 0.2)",
+                        borderColor: "rgba(255, 99, 132, 1)",
+                        borderWidth: 2
+                    }]
+                }
+            });
+
+            document.getElementById("parameterSelect").addEventListener("change", function () {
+                const selectedParam = this.value;
+                chart.data.datasets[0].label = this.options[this.selectedIndex].text;
+                chart.data.datasets[0].data = chartData[selectedParam];
+                chart.update();
+            });
+        });
+    </script>
+
+</body>
+</html>

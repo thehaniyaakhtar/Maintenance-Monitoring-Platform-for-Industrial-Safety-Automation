@@ -1,0 +1,18 @@
+[
+    {
+        "date": "2025-04-24 22:28:00",
+        "air_temp": 45,
+        "process_temp": 49,
+        "rotational_speed": 68,
+        "torque": 58,
+        "tool_wear": 98
+    },
+    {
+        "date": "2025-04-26 08:19:22",
+        "air_temp": 1,
+        "process_temp": 2,
+        "rotational_speed": 3,
+        "torque": 4,
+        "tool_wear": 5
+    }
+]
