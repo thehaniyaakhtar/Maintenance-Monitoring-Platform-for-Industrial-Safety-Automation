@@ -1,4 +1,4 @@
-# Industrial Safety and Maintenance Monitoring Hub
+# Deep Learning-Powered Multi-Asset Forecasting Engine
 
 ---
 
