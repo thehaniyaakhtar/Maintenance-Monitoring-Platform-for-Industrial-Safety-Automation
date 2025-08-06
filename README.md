@@ -1,10 +1,10 @@
-# Deep Learning-Powered Multi-Asset Forecasting Engine
+# Maintenance Monitoring Platform for Industrial Safety Automation
 
 ---
 
 ## Overview
 
-**Industrial Machine Maintenance and Monitoring Hub** is a centralized web platform designed to streamline and optimize the maintenance processes of industrial machinery.  
+**Maintenance Monitoring Platform for Industrial Safety Automation** is a centralized web platform designed to streamline and optimize the maintenance processes of industrial machinery.  
 It helps industries by scheduling preventive maintenance, generating timely alerts based on issue severity, and monitoring machine performance data.
 
 By integrating technology and data-driven solutions, this system aims to **enhance operational efficiency**, **reduce unexpected downtimes**, and **improve equipment lifespan**.
